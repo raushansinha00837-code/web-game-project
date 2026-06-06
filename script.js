@@ -53,21 +53,20 @@ function resetgame() {
     box.disabled = false;
   });
 }
-resetbtn.addEventListener("click", resetgame);
-const btn = document.getElementById("btn");
-const beam = document.getElementById("beam");
-const lamp = document.querySelector(".lamp");
+function showName() {
+  let username = document.getElementById("name").value;
+  document.getElementById("result").innerText = `WELCOME, ${username}!`;
+}
+function celebrate() {
+  let name = document.getElementById("name").value;
+  saveName(name);
+ document.getElementById("result").innerText = `Congratulations, ${name},have a good day\n Enjoy every moment and make today unforgettable!`;
+  confetti({
+    particleCount: 200,
+    spread: 120,
+    origin: { y: 0.6 }
+ });
+ 
 
-let isOn = false;
-
-btn.addEventListener("click", () => {
-
-    isOn = !isOn;
-
-    beam.classList.toggle("on");
-    lamp.classList.toggle("glow");
-
-    btn.textContent = isOn
-        ? ""
-        : "";
-});
+  
+}
