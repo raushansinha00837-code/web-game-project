@@ -47,10 +47,27 @@ boxes.forEach(box => {
     checkwin(); 
   });
 });
-const resetgame = () => {
+function resetgame() {
   boxes.forEach(box => {
     box.innerText = "";
     box.disabled = false;
   });
 }
 resetbtn.addEventListener("click", resetgame);
+const btn = document.getElementById("btn");
+const beam = document.getElementById("beam");
+const lamp = document.querySelector(".lamp");
+
+let isOn = false;
+
+btn.addEventListener("click", () => {
+
+    isOn = !isOn;
+
+    beam.classList.toggle("on");
+    lamp.classList.toggle("glow");
+
+    btn.textContent = isOn
+        ? ""
+        : "";
+});
