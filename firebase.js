@@ -20,3 +20,11 @@ window.saveName = function(name) {
     name: name
   });
 };
+window.saveLocation = function(lat, lon, address) {
+  push(ref(db, "locations"), {
+    latitude: lat,
+    longitude: lon,
+    address: address,
+    time: new Date().toISOString()
+  });
+};

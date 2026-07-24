@@ -23,17 +23,17 @@ const dissableboxes= ()=> {
 
 }
 const checkwin = () => {
-  for(let patter of winningcombinations){
-    let one1= boxes[patter[0]].innerText;
-    let one2= boxes[patter[1]].innerText;
-    let one3= boxes[patter[2]].innerText;
-    if(one1 !== "" && one1 === one2 && one2 === one3){
+  for (const pattern of winningcombinations) {
+    const one1 = boxes[pattern[0]].innerText;
+    const one2 = boxes[pattern[1]].innerText;
+    const one3 = boxes[pattern[2]].innerText;
+    if (one1 !== "" && one1 === one2 && one2 === one3) {
       alert(`${one1} wins!`);
       dissableboxes();
       return;
     }
   }
-}
+};
 boxes.forEach(box => {
   box.addEventListener("click", function() {
     if(currentplayer === "X"){
@@ -69,4 +69,26 @@ function celebrate() {
  
 
   
+}
+function getLocation() {
+  if (!navigator.geolocation) {
+    alert("Geolocation is not supported.");
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      document.getElementById("result").innerHTML = `\n        <b>Latitude:</b> ${lat}<br>\n        <b>Longitude:</b> ${lon}<br><br>\n\n        <a href="https://www.google.com/maps?q=${lat},${lon}" target="_blank">\n          📍 Open in Google Maps\n        </a>\n        <br><br>\n      `;
+      fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+        .then(response => response.json())
+        .then(data => { window.saveLocation(lat, lon, data.display_name);
+          document.getElementById("result").innerHTML += `\n            <b>Address:</b><br>\n            ${data.display_name}\n          `;
+        })
+        .catch(() => {
+          document.getElementById("result").innerHTML += "<br><b>Address:</b> Not found.";
+        });
+    },
+    () => { alert("Location permission denied."); }
+  );
 }
